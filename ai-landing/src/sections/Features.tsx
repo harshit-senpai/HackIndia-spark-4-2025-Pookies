@@ -32,22 +32,40 @@ const tabs = [
 
 export const Features = () => {
   return (
-    <section>
+    <section className="py-20 md:py-24">
       <div className="container">
-        <h2>Elevate your SEO efforts</h2>
-        <p>
+        <h2 className="text-5xl md:text-6xl font-medium text-center tracking-tighter">
+          Elevate your SEO efforts
+        </h2>
+        <p className="text-white/70 text-center md:text-xl mx-auto max-w-2xl text-lg tracking-tight mt-5">
           From small startups to large enterprises, our AI-driven toll has
           revolutonized the way businesses approach SEO.
         </p>
-        {tabs.map((tab) => (
-          <div key={tab.title}>
-            <DotLottiePlayer src={tab.icon} className="h-5 w-5" autoplay />
-            <div>{tab.title}</div>
-            {tab.isNew && <div>New</div>}
-          </div>
-        ))}
+        <div className="mt-10 flex flex-col lg:flex-row gap-3">
+          {tabs.map((tab) => (
+            <div
+              key={tab.title}
+              className="border border-white/15 flex p-2.5 rounded-xl gap-2.5 items-center lg:flex-1"
+            >
+              <div className="h-12 w-12 border border-white/15 rounded-lg inline-flex items-center justify-center">
+                <DotLottiePlayer src={tab.icon} className="h-5 w-5" autoplay />
+              </div>
+              <div className="font-medium text-sm">{tab.title}</div>
+              {tab.isNew && (
+                <div className="text-xs rounded-full px-2 py-0.5 bg-[#8c44ff] text-black font-semibold">
+                  New
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="border border-white/20 p-2.5 rounded-xl mt-3">
+          <div
+            className="aspect-video bg-cover border border-white/20 rounded-lg"
+            style={{ backgroundImage: `url(${productImage.src})` }}
+          ></div>
+        </div>
       </div>
-      <Image src={productImage} alt="Product Image" height={500} width={500} />
     </section>
   );
 };
