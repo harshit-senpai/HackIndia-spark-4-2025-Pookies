@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 import { Button } from "@/components/Button";
 import starsBg from "@/assets/stars.png";
 
@@ -13,7 +17,22 @@ export const Hero = () => {
       {/* planet with it's shadow */}
       <div className="absolute h-64 w-64 md:h-96 md:w-96 bg-purple-500 rounded-full border border-white/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(50%_50%_at_16.8%_18.3%,white,rgb(184,148,255)_37.7%,rgb(24,0,66))] shadow-[-20px_-20px_50px_rgb(255,255,255,.5),-20px_-20px_80px_rgb(255,255,255,.1),0_0_50px_rgb(140,69,255)]"></div>
       {/* inner most ring */}
-      <div className="absolute h-[344px] w-[344px] md:h-[580px] md:w-[580px] border border-white rounded-full top-1/2 left-1/2 opacity-20 -translate-x-1/2 -translate-y-1/2">
+      <motion.div
+        // sort of preserving the styles implemented earlier
+        style={{
+          translateY: "-50%",
+          translateX: "-50%",
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 30,
+          ease: "linear",
+        }}
+        animate={{
+          rotate: "1turn",
+        }}
+        className="absolute h-[344px] w-[344px] md:h-[580px] md:w-[580px] border border-white rounded-full top-1/2 left-1/2 opacity-20 -translate-x-1/2 -translate-y-1/2"
+      >
         {/* left dot */}
         <div className="absolute h-2 w-2 top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 rounded-full bg-white"></div>
         {/* upper dot */}
@@ -23,16 +42,44 @@ export const Hero = () => {
           {/* inner dot */}
           <div className="h-2 w-2 bg-white rounded-full"></div>
         </div>
-      </div>
+      </motion.div>
       {/* second inner ring */}
-      <div className="absolute h-[444px] opacity-20 w-[444px] md:h-[780px] md:w-[780px] border border-white rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed"></div>
+      <motion.div
+        style={{
+          translateY: "-50%",
+          translateX: "-50%",
+        }}
+        animate={{
+          rotate: "-1turn",
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 90,
+          ease: "linear",
+        }}
+        className="absolute h-[444px] opacity-20 w-[444px] md:h-[780px] md:w-[780px] border border-white rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed"
+      ></motion.div>
       {/* 3rd inner ring */}
-      <div className="absolute h-[544px] w-[544px] md:h-[980px] md:w-[980px] rounded-full border border-white opacity-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <motion.div
+        style={{
+          translateY: "-50%",
+          translateX: "-50%",
+        }}
+        animate={{
+          rotate: "1turn",
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 90,
+          ease: "linear",
+        }}
+        className="absolute h-[544px] w-[544px] md:h-[980px] md:w-[980px] rounded-full border border-white opacity-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
         {/* left dot */}
         <div className="absolute h-2 w-2 top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 rounded-full bg-white"></div>
         {/* right dot */}
         <div className="absolute h-5 w-5 top-1/2 -translate-y-1/2 -translate-x-1/2 left-full rounded-full border bg-white"></div>
-      </div>
+      </motion.div>
       {/* text container */}
       <div className="container relative mt-16">
         {/* gradient heading text */}
