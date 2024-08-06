@@ -1,16 +1,53 @@
 "use client";
 
-import { motion } from "framer-motion";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 
 import { Button } from "@/components/Button";
 import starsBg from "@/assets/stars.png";
+import { useRef } from "react";
 
 export const Hero = () => {
+  // using the ref to reference the section for parallax scrolling
+  const sectionRef = useRef(null);
+
+  // useScroll hook to get the scroll progress of the target and to moniter from where to where, in this case moniter from start to end and end to start
+  // then getting the scrollYProgress from the useScroll hook
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  // whenever the scrollYProgress changes useMotionValueEvent will be triggered and some operation will be performed
+  // useMotionValueEvent(scrollYProgress, "change", (value) => {
+  //   console.log(value);
+  // });
+
+  // translating the decimals values ranging from o to 1 to -300 to 300 based on the scrollYProgress
+  // making a backgroundPostionY variable to the scrollYProgress
+  const backgroundPositionY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [-300, 300]
+  );
   return (
     // whole Hero section style has star image getting repeated left and right
-    <section
+    <motion.section
+      ref={sectionRef}
+      // moving the background in X direction
+      animate={{ backgroundPositionX: starsBg.width }}
+      transition={{
+        repeat: Infinity,
+        duration: 120,
+        ease: "linear",
+      }}
       className="h-[492px] md:h-[680px] flex items-center relative overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]"
-      style={{ backgroundImage: `url(${starsBg.src})` }}
+      style={{ backgroundImage: `url(${starsBg.src})`, backgroundPositionY }}
+      // simply adding the current background position using backgroundPositionY with the help of scrollProgressY
     >
       {/* purple background */}
       <div className="absolute inset-0 bg-[radial-gradient(75%_75%_at_center_center,rgb(140,69,255,.5)_15%,rgb(14,0,36,.5)_78%,transparent)]"></div>
@@ -94,6 +131,6 @@ export const Hero = () => {
           <Button>Join Waitlist</Button>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
