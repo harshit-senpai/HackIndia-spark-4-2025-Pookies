@@ -1,15 +1,36 @@
+"use client";
 import { Button } from "@/components/Button";
 import starBg from "@/assets/stars.png";
 import gridLined from "@/assets/grid-lines.png";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 export const CallToAction = () => {
+  const imageRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: imageRef,
+    offset: ["start end", "end start"],
+  });
+  const backgroundPositionY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [-300, 300]
+  );
   return (
     <section className="py-20 md:py-24">
       <div className="container">
-        <div
+        <motion.div
+          animate={{ backgroundPositionX: starBg.width }}
+          transition={{
+            repeat: Infinity,
+            duration: 120,
+            ease: "linear",
+          }}
+          ref={imageRef}
           className="border border-white/15 rounded-xl py-24 overflow-hidden relative"
           style={{
             backgroundImage: `url(${starBg.src})`,
+            backgroundPositionY,
           }}
         >
           <div
@@ -29,7 +50,7 @@ export const CallToAction = () => {
               <Button>Join Waitlist</Button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
