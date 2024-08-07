@@ -135,6 +135,48 @@ const FeatureTab = (
 
 export const Features = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+
+  // getting the current tab's image backgroundPosition in X and Y directions
+  const backgroundPositionX = useMotionValue(tabs[0].backgroundPositionX);
+  const backgroundPositionY = useMotionValue(tabs[0].backgroundPositionY);
+  // computing the size of the background image based on the size
+  const backgroundSizeX = useMotionValue(tabs[0].backgroundSizeX);
+
+  const backgroundPosition = useMotionTemplate`${backgroundPositionX}% ${backgroundPositionY}%`;
+  const backgroundSize = useMotionTemplate`${backgroundSizeX}% auto`;
+
+  const handleSelectTab = (index: number) => {
+    setSelectedTab(index);
+
+    // animating the size of image
+    animate(
+      backgroundSizeX,
+      [backgroundSizeX.get(), 100, tabs[index].backgroundSizeX],
+      {
+        duration: 2,
+        ease: "easeInOut",
+      }
+    );
+    // animating the x axis of the image
+    animate(
+      backgroundPositionX,
+      [backgroundPositionX.get(), tabs[index].backgroundPositionX],
+      {
+        duration: 2,
+        ease: "easeInOut",
+      }
+    );
+    // animating the y axis of the image
+    animate(
+      backgroundPositionY,
+      [backgroundPositionY.get(), tabs[index].backgroundPositionY],
+      {
+        duration: 2,
+        ease: "easeInOut",
+      }
+    );
+  };
+
   return (
     <section className="py-20 md:py-24">
       <div className="container">
@@ -150,16 +192,20 @@ export const Features = () => {
             <FeatureTab
               selected={selectedTab === tabIndex}
               {...tab}
-              onClick={() => setSelectedTab(tabIndex)}
+              onClick={() => handleSelectTab(tabIndex)}
               key={tab.title}
             />
           ))}
         </div>
         <div className="border border-white/20 p-2.5 rounded-xl mt-3">
-          <div
+          <motion.div
             className="aspect-video bg-cover border border-white/20 rounded-lg"
-            style={{ backgroundImage: `url(${productImage.src})` }}
-          ></div>
+            style={{
+              backgroundImage: `url(${productImage.src})`,
+              backgroundPosition,
+              backgroundSize,
+            }}
+          ></motion.div>
         </div>
       </div>
     </section>
