@@ -4,7 +4,7 @@ import {
   DotLottiePlayer,
 } from "@dotlottie/react-player";
 import productImage from "@/assets/product-image.png";
-import { useEffect, useRef, useState } from "react";
+import { ComponentPropsWithoutRef, useEffect, useRef, useState } from "react";
 import {
   animate,
   motion,
@@ -40,8 +40,10 @@ const tabs = [
   },
 ];
 
-const FeatureTab = (tab: (typeof tabs)[number]) => {
-  const [selectedTab, setSelectedTab] = useState(0);
+const FeatureTab = (
+  props: (typeof tabs)[number] &
+    ComponentPropsWithoutRef<"div"> & { selected: boolean }
+) => {
   // using this ref to target the Lottie for animation
   const LottieRef = useRef<DotLottieCommonPlayer>(null);
   const tabRef = useRef<HTMLDivElement>(null);
@@ -67,7 +69,9 @@ const FeatureTab = (tab: (typeof tabs)[number]) => {
   // as soon as the component mounts we are gonna create the animation using useEffect animate function
 
   useEffect(() => {
-    if (!tabRef.current) return;
+    if (!tabRef.current || !props.selected) return;
+    xPercentage.set(0);
+    yPercentage.set(0);
     // getting the height and width of the div
     const { width, height } = tabRef.current.getBoundingClientRect();
     const circumference = height * 2 + width * 2;
@@ -90,34 +94,37 @@ const FeatureTab = (tab: (typeof tabs)[number]) => {
     // the animation is a bit weird as the distance it is traveleing in y is less and distance it is travellig in x is more but the time duration is same for the both axis, to do this we are gonna measure the rectange and how much the circumfarence we need to cover  and we are gonna split it out and make our transition happen at right times
 
     // The xPercentage and yPercentage control the horizontal and vertical positions, respectively, while times dictate the keyframe timings for these animations to ensure they stay in sync
-  }, [xPercentage, yPercentage]);
+  }, [xPercentage, yPercentage, props.selected]);
 
   return (
     <div
       ref={tabRef}
       onMouseEnter={handleMouseEnter}
       className="border border-white/15 flex p-2.5 rounded-xl gap-2.5 items-center lg:flex-1 relative"
+      onClick={props.onClick}
     >
       {/* [mask-image:radial-gradient(80px_80px_at_0%_0%,black,transparent)] we are going to animate these percentages to go from 0% 0% to 100% 100%  -> 0 0 being top left of dive and 100 100 being bottom right of div we will animate this using motion value and dynamically set the value mask-image value from it */}
 
       {/* <div className="absolute rounded-xl -m-px inset-0 border border-[#A369FF] [mask-image:radial-gradient(80px_80px_at_0%_0%,black,transparent)]"></div> */}
+      {props.selected && (
+        <motion.div
+          style={{
+            maskImage,
+          }}
+          className="absolute rounded-xl -m-px inset-0 border border-[#A369FF]"
+        ></motion.div>
+      )}
 
-      <motion.div
-        style={{
-          maskImage,
-        }}
-        className="absolute rounded-xl -m-px inset-0 border border-[#A369FF]"
-      ></motion.div>
       <div className="h-12 w-12 border border-white/15 rounded-lg inline-flex items-center justify-center">
         <DotLottiePlayer
           ref={LottieRef}
-          src={tab.icon}
+          src={props.icon}
           className="h-5 w-5"
           autoplay
         />
       </div>
-      <div className="font-medium text-sm">{tab.title}</div>
-      {tab.isNew && (
+      <div className="font-medium text-sm">{props.title}</div>
+      {props.isNew && (
         <div className="text-xs rounded-full px-2 py-0.5 bg-[#8c44ff] text-black font-semibold">
           New
         </div>
@@ -127,6 +134,7 @@ const FeatureTab = (tab: (typeof tabs)[number]) => {
 };
 
 export const Features = () => {
+  const [selectedTab, setSelectedTab] = useState(0);
   return (
     <section className="py-20 md:py-24">
       <div className="container">
@@ -138,8 +146,13 @@ export const Features = () => {
           revolutonized the way businesses approach SEO.
         </p>
         <div className="mt-10 flex flex-col lg:flex-row gap-3">
-          {tabs.map((tab) => (
-            <FeatureTab {...tab} key={tab.title} />
+          {tabs.map((tab, tabIndex) => (
+            <FeatureTab
+              selected={selectedTab === tabIndex}
+              {...tab}
+              onClick={() => setSelectedTab(tabIndex)}
+              key={tab.title}
+            />
           ))}
         </div>
         <div className="border border-white/20 p-2.5 rounded-xl mt-3">
