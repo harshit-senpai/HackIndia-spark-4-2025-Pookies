@@ -51,12 +51,12 @@ const AccordionItem = ({
 
 export const FAQs = () => {
   return (
-    <section className="bg-black py-[72px] text-white sm:py-24 bg-gradient-to-b from-[#5D2CAB] to-black">
-      <div className="container">
-        <h2 className="text-center sm:max-w-[648px] text-5xl sm:text-6xl font-semibold tracking-tighter">
+    <section className="bg-black  py-[72px] text-white sm:py-24 bg-gradient-to-b from-[#5D2CAB] to-black">
+      <div className="container ">
+        <h2 className="text-center mx-auto sm:max-w-[648px] text-5xl sm:text-6xl font-semibold tracking-tighter">
           Frequently asked questions
         </h2>
-        <div className="mt-12 max-w[648px]">
+        <div className="mt-12 max-w-[648px] mx-auto">
           {items.map((item) => (
             <AccordionItem key={item.question} {...item} />
           ))}
