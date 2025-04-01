@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@types/recharts": "^1.8.29",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "recharts": "^2.15.1"
+  }
+}
