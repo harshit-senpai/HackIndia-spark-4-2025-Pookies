@@ -39,12 +39,12 @@ export const Header = () => {
                 href={"/"}
                 className="text-white/70 hover:text-white transition"
               >
-                Changelog
+                Dashboard
               </Link>
             </nav>
           </div>
           <div className="flex gap-4 items-center">
-            <Button>Join Waitlist</Button>
+            <Button>Get Started for Free</Button>
             <MenuIcon className="md:hidden" />
           </div>
         </div>
