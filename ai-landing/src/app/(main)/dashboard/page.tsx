@@ -75,9 +75,9 @@ const DashboardPage = () => {
                 />
               </div>
               <Button 
-                onClick={handleGenerate} 
-                disabled={!topic || isGenerating}
-                className="w-full"
+                // onClick={handleGenerate} 
+                // disabled={!topic || isGenerating}
+                // className="w-full"
               >
                 {isGenerating ? (
                   <>
@@ -172,7 +172,7 @@ const DashboardPage = () => {
                 <CardContent>
                   <div className="space-y-4">
                     <p>Ready to publish your content across platforms?</p>
-                    <Button className="w-full">Publish Now</Button>
+                    <Button>Publish Now</Button>
                   </div>
                 </CardContent>
               </Card>
