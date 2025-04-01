@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
       default:
         articlePrompt += ` The article should be informative, engaging, and well-structured.`;
     }
+    // prompts
 
     const articleResult = await model.generateContent(articlePrompt);
     const articleResponse = await articleResult.response.text();
