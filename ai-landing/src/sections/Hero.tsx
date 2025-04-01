@@ -123,8 +123,8 @@ export const Hero = () => {
           MindCMS
         </h1>
         <p className="text-lg md:text-xl max-w-xl mx-auto text-white/70 mt-5 text-center">
-          Elevate your site&apos;s visibility effortlessly with AI, when smart
-          technology meets user-friendly SEO tools.
+          Elevate your Content generation and analytics effortlessly with AI, when smart
+          technology meets user-friendly SEO & Content generation tools.
         </p>
         <div className="flex justify-center mt-5">
           <Button>Join Waitlist</Button>
