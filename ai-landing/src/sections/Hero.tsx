@@ -9,8 +9,10 @@ import {
 import { Button } from "@/components/Button";
 import starsBg from "@/assets/stars.png";
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export const Hero = () => {
+  const router = useRouter();
   // using the ref to reference the section for parallax scrolling
   const sectionRef = useRef(null);
 
@@ -127,7 +129,7 @@ export const Hero = () => {
         Create, Optimize, and Publish High-Quality Content in Minutes
         </p>
         <div className="flex justify-center mt-5">
-          <Button>Get Started for Free</Button>
+          <Button onClick={() => router.push("/dashboard")}>Get Started for Free</Button>
         </div>
       </div>
     </motion.section>

@@ -1,9 +1,13 @@
+"use client"
+
 import LogoIcon from "@/assets/logo.svg";
 import MenuIcon from "@/assets/icon-menu.svg";
 import Link from "next/link";
 import { Button } from "@/components/Button";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
+  const router = useRouter()
   return (
     <header className="sticky top-0 z-10 py-4 border-b border-white/15 md:border-none">
       <div className="absolute inset-0 backdrop-blur -z-10 md:hidden"></div>
@@ -30,13 +34,13 @@ export const Header = () => {
                 Developers
               </Link>
               <Link
-                href={"/"}
+                href={"/subscription"}
                 className="text-white/70 hover:text-white transition"
               >
                 Pricing
               </Link>
               <Link
-                href={"/"}
+                href={"/dashboard"}
                 className="text-white/70 hover:text-white transition"
               >
                 Dashboard
@@ -44,7 +48,7 @@ export const Header = () => {
             </nav>
           </div>
           <div className="flex gap-4 items-center">
-            <Button>Get Started for Free</Button>
+            <Button onClick={() => router.push("/dashboard")}>Get Started for Free</Button>
             <MenuIcon className="md:hidden" />
           </div>
         </div>

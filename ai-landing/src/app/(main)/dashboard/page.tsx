@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 const DashboardPage = () => {
   const [topic, setTopic] = useState("");
@@ -83,6 +84,8 @@ const DashboardPage = () => {
       setIsGenerating(false);
     }
   };
+
+  const router = useRouter();
 
   return (
     <div className="container mx-auto p-6">
@@ -176,7 +179,7 @@ const DashboardPage = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Analytics</CardTitle>
+            <CardTitle><button onClick={()=> router.push("/analytics")}>Analytics</button></CardTitle>
             <CardDescription>Content performance metrics</CardDescription>
           </CardHeader>
           <CardContent>

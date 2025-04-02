@@ -5,7 +5,6 @@ if (!process.env.GOOGLE_API_KEY) {
   throw new Error("GOOGLE_API_KEY is not set in environment variables");
 }
 
-// Initialize Gemini API with proper configuration
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 export async function POST(req: NextRequest) {
@@ -18,7 +17,6 @@ export async function POST(req: NextRequest) {
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
 
-    // Generate platform-specific content
     let articlePrompt = `Write a comprehensive article about ${topic} in the ${
       category || "general"
     } category.`;
