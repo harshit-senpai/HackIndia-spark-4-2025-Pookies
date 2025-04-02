@@ -5,23 +5,6 @@ import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import { AlignLeft, AlignCenter, AlignRight, Code, Quote } from "lucide-react";
 
-const markdownConfig = {
-  heading: {
-    levels: [1, 2, 3, 4, 5, 6],
-    parseHTML: (element: any) => {
-      const level = Number(element.tagName.replace("H", ""));
-      return { level };
-    },
-  },
-  bold: {},
-  italic: {},
-  code: {},
-  codeBlock: {},
-  blockquote: {},
-  bulletList: {},
-  orderedList: {},
-};
-
 interface RichTextEditorProps {
   content: string;
   onChange: (content: string) => void;
@@ -29,6 +12,10 @@ interface RichTextEditorProps {
 
 export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+    ],
     parseOptions: {
       preserveWhitespace: true,
     },
@@ -39,17 +26,19 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
     },
   });
 
-  if (!editor) {
-    return null;
-  }
+  if (!editor) return null;
 
   return (
     <div className="border rounded-md">
       <div className="border-b p-2 flex flex-wrap gap-2">
+        {/* Heading Buttons */}
         <div className="flex gap-1 items-center border-r pr-2">
           {[1, 2, 3, 4, 5, 6].map((level) => (
             <button
               key={level}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: level as 1 | 2 | 3 | 4 | 5 | 6 }).run()
+              }
               className={`p-1 rounded min-w-[2rem] ${
                 editor.isActive("heading", { level }) ? "bg-slate-200" : ""
               }`}
@@ -60,6 +49,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           ))}
         </div>
 
+        {/* Bold & Italic */}
         <div className="flex gap-1 items-center border-r pr-2">
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
@@ -81,6 +71,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           </button>
         </div>
 
+        {/* Text Alignment */}
         <div className="flex gap-1 items-center border-r pr-2">
           <button
             onClick={() => editor.chain().focus().setTextAlign("left").run()}
@@ -111,6 +102,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           </button>
         </div>
 
+        {/* Lists, Blockquote, and Code Block */}
         <div className="flex gap-1 items-center">
           <button
             onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -150,6 +142,8 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           </button>
         </div>
       </div>
+
+      {/* Editor Content */}
       <EditorContent
         editor={editor}
         className="p-4 min-h-[200px] prose max-w-none"
