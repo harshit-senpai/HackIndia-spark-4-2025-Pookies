@@ -11,7 +11,7 @@ export const Footer = () => {
         <div className="flex flex-col lg:flex-row lg:items-center gap-8">
           <div className="flex gap-2 items-center lg:flex-1">
             <Logo className="h-6 w-6" />
-            <div className="font-medium">AI startup Landing page</div>
+            <div className="font-medium">MinsCMS</div>
           </div>
           <nav className="flex flex-col lg:flex-row lg:gap-7 lg:flex-1 lg:justify-center gap-5">
             <Link
@@ -36,13 +36,13 @@ export const Footer = () => {
               className="text-white/70 hover:text-white text-xs md:text-sm transition"
               href="/"
             >
-              Blog
+              Pricing
             </Link>
             <Link
               className="text-white/70 hover:text-white text-xs md:text-sm transition"
               href="/"
             >
-              Changelog
+              Dashboard
             </Link>
           </nav>
           <div className="flex gap-5 lg:flex-1 lg:justify-end">
